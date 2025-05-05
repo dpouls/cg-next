@@ -1,49 +1,131 @@
-# Next.js with shadcn/ui
+# Common Ground
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and styled using [shadcn/ui](https://ui.shadcn.com/).
+A platform for facilitating meaningful civic conversations and collaborative problem-solving through AI-assisted group discussions.
+
+## Features
+
+- Modern, responsive UI built with Next.js and shadcn/ui
+- Real-time chat functionality with Socket.io
+- State management with Zustand
+- Data fetching with TanStack Query
+- Beautiful color scheme with dark mode support
+- Group chat rooms with message history
+- User authentication (coming soon)
+
+## Tech Stack
+
+- **Frontend Framework**: Next.js 14
+- **UI Components**: shadcn/ui
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand
+- **Real-time Communication**: Socket.io
+- **Data Fetching**: TanStack Query
+- **Type Safety**: TypeScript
 
 ## Getting Started
 
-First, install the dependencies:
+### Prerequisites
 
+- Node.js 18+ 
+- npm or yarn
+- Git
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd cg-next
+```
+
+2. Install dependencies:
 ```bash
 npm install
 # or
 yarn install
-# or
-pnpm install
 ```
 
-Then, run the development server:
+3. Create a `.env.local` file in the root directory:
+```env
+NEXT_PUBLIC_SOCKET_URL=your_socket_server_url
+```
 
+4. Start the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Features
+## Project Structure
 
-- Next.js 13 with App Router
-- TypeScript
-- Tailwind CSS
-- shadcn/ui Components
-- Modern and responsive design
+```
+src/
+├── app/                 # Next.js app directory
+│   ├── chat/           # Chat page
+│   ├── layout.tsx      # Root layout
+│   └── page.tsx        # Home page
+├── components/         # React components
+│   ├── ui/            # shadcn/ui components
+│   ├── ChatRoom.tsx   # Chat room component
+│   └── header.tsx     # Header component
+├── store/             # Zustand stores
+│   └── useChatStore.ts
+├── services/          # Service integrations
+│   └── socket.ts      # Socket.io service
+└── styles/            # Global styles
+    └── globals.css    # Tailwind and custom styles
+```
 
-## Learn More
+## Available Scripts
 
-To learn more about the technologies used in this project:
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [shadcn/ui Documentation](https://ui.shadcn.com/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+## Color Scheme
 
-## Deploy on Vercel
+The application uses a sophisticated color palette:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Myrtle Green** (#3a7d7d) - Primary color
+- **Xanthous** (#f2b134) - Secondary color
+- **Isabelline** (#f7f4ed) - Background
+- **Jet** (#2d2d2d) - Text
+- **Indian Red** (#d9645a) - Accent
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Development Notes
+
+### State Management
+
+We use Zustand for state management, with the following stores:
+- `useChatStore` - Manages chat messages and room state
+
+### Real-time Features
+
+Socket.io is used for real-time chat functionality:
+- Message broadcasting
+- Room management
+- User presence
+
+### API Integration
+
+TanStack Query is used for data fetching:
+- Message history
+- User data
+- Room information
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
