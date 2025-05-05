@@ -42,7 +42,7 @@ export default function Home() {
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             Find Common Ground. Build Real Solutions.
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-xl  mb-8 max-w-2xl mx-auto">
             Small-group, AI-assisted civic conversations that lead to real-world action — not just arguments.
           </p>
           <div className="flex gap-4 justify-center">
@@ -64,7 +64,7 @@ export default function Home() {
                     <MessageSquare className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">Take the Quiz</h3>
-                  <p className="text-muted-foreground">Answer a few questions about your beliefs and values.</p>
+                  <p className="">Answer a few questions about your beliefs and values.</p>
                 </div>
               </CardContent>
             </Card>
@@ -75,7 +75,7 @@ export default function Home() {
                     <Users className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">Join a Group</h3>
-                  <p className="text-muted-foreground">Get matched with others in your area or interest group.</p>
+                  <p className="">Get matched with others in your area or interest group.</p>
                 </div>
               </CardContent>
             </Card>
@@ -86,7 +86,7 @@ export default function Home() {
                     <FileText className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">Create Change</h3>
-                  <p className="text-muted-foreground">Collaborate on proposals to improve your community.</p>
+                  <p className="text">Collaborate on proposals to improve your community.</p>
                 </div>
               </CardContent>
             </Card>
@@ -99,7 +99,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6">Tired of endless online arguments? So are we.</h2>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-xl  mb-8">
               Common Ground brings people together to talk with each other — not past each other. 
               With guided discussions and helpful AI, we help neighbors understand each other and 
               co-create local solutions.
@@ -116,19 +116,19 @@ export default function Home() {
             <Card>
               <CardContent className="pt-6">
                 <h3 className="text-xl font-semibold mb-2">AI never speaks for you</h3>
-                <p className="text-muted-foreground">Your voice remains your own, with AI only facilitating the conversation.</p>
+                <p className="">Your voice remains your own, with AI only facilitating the conversation.</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
                 <h3 className="text-xl font-semibold mb-2">Transparent & Optional</h3>
-                <p className="text-muted-foreground">AI&apos;s role is transparent, opt-outable, and non-pushy.</p>
+                <p className="">AI&apos;s role is transparent, opt-outable, and non-pushy.</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
                 <h3 className="text-xl font-semibold mb-2">Community-First</h3>
-                <p className="text-muted-foreground">Moderation is community-first, not censor-first.</p>
+                <p className="">Moderation is community-first, not censor-first.</p>
               </CardContent>
             </Card>
           </div>
@@ -142,7 +142,7 @@ export default function Home() {
             <blockquote className="text-xl italic mb-4">
               &ldquo;I went in expecting to argue, but came out drafting a shared proposal with someone who disagreed with me.&rdquo;
             </blockquote>
-            <p className="text-muted-foreground">— Jordan, Beta Tester</p>
+            <p className="">— Jordan, Beta Tester</p>
           </div>
         </div>
       </section>

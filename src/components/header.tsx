@@ -10,7 +10,10 @@ export function Header() {
         <Link href="/" className="text-2xl font-bold">
           Common Ground
         </Link>
-        <nav>
+        <nav className="flex items-center gap-4">
+          <Button variant="ghost" asChild>
+            <Link href="/chat">Chat</Link>
+          </Button>
           <Button variant="ghost" asChild>
             <Link href="/login">Login</Link>
           </Button>
