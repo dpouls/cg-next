@@ -5,11 +5,9 @@ A platform for facilitating meaningful civic conversations and collaborative pro
 ## Features
 
 - Modern, responsive UI built with Next.js and shadcn/ui
-- Real-time chat functionality with Socket.io
 - State management with Zustand
 - Data fetching with TanStack Query
 - Beautiful color scheme with dark mode support
-- Group chat rooms with message history
 - User authentication (coming soon)
 
 ## Tech Stack
@@ -18,7 +16,6 @@ A platform for facilitating meaningful civic conversations and collaborative pro
 - **UI Components**: shadcn/ui
 - **Styling**: Tailwind CSS
 - **State Management**: Zustand
-- **Real-time Communication**: Socket.io
 - **Data Fetching**: TanStack Query
 - **Type Safety**: TypeScript
 
@@ -45,36 +42,27 @@ npm install
 yarn install
 ```
 
-3. Create a `.env.local` file in the root directory:
-```env
-NEXT_PUBLIC_SOCKET_URL=your_socket_server_url
-```
-
-4. Start the development server:
+3. Start the development server:
 ```bash
 npm run dev
 # or
 yarn dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
 
 ```
 src/
 ├── app/                 # Next.js app directory
-│   ├── chat/           # Chat page
 │   ├── layout.tsx      # Root layout
 │   └── page.tsx        # Home page
 ├── components/         # React components
 │   ├── ui/            # shadcn/ui components
-│   ├── ChatRoom.tsx   # Chat room component
 │   └── header.tsx     # Header component
 ├── store/             # Zustand stores
-│   └── useChatStore.ts
 ├── services/          # Service integrations
-│   └── socket.ts      # Socket.io service
 └── styles/            # Global styles
     └── globals.css    # Tailwind and custom styles
 ```
@@ -101,22 +89,13 @@ The application uses a sophisticated color palette:
 
 ### State Management
 
-We use Zustand for state management, with the following stores:
-- `useChatStore` - Manages chat messages and room state
-
-### Real-time Features
-
-Socket.io is used for real-time chat functionality:
-- Message broadcasting
-- Room management
-- User presence
+We use Zustand for state management.
 
 ### API Integration
 
 TanStack Query is used for data fetching:
-- Message history
 - User data
-- Room information
+- Thread and comment data
 
 ## Contributing
 
