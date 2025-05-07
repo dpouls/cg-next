@@ -97,13 +97,13 @@ export default function ThreadPage({ params }: { params: { threadId: string } })
                 <div className="flex items-center gap-2 mb-2">
                   <Avatar className="h-8 w-8">
                     <AvatarFallback>
-                      {thread?.author_name.split(' ').map(n => n[0]).join('')}
+                      {thread?.authorName.split(' ').map(n => n[0]).join('')}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex items-center gap-2">
-                    <span className="font-medium">{thread?.author_name}</span>
+                    <span className="font-medium">{thread?.authorName}</span>
                     <span className="text-sm text-gray-600">
-                      {formatTimestamp(thread?.created_at || '')}
+                      {formatTimestamp(thread?.createdAt || '')}
                     </span>
                   </div>
                 </div>
@@ -118,7 +118,7 @@ export default function ThreadPage({ params }: { params: { threadId: string } })
                   </Button>
                   <div className="flex items-center gap-1 text-sm text-muted-foreground">
                     <MessageSquare className="h-4 w-4" />
-                    <span>{thread?.comment_count} comments</span>
+                    <span>{thread?.commentCount} comments</span>
                   </div>
                 </div>
               </CardContent>
@@ -147,7 +147,7 @@ export default function ThreadPage({ params }: { params: { threadId: string } })
               <h3 className="text-lg font-semibold">Comments</h3>
               {thread?.comments.map((comment) => (
                 <Comment 
-                  key={comment.comment_id} 
+                  key={comment.id} 
                   comment={comment} 
                   onReply={handleReply}
                 />

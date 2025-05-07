@@ -1,83 +1,85 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useRouter } from 'next/navigation'
+import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import { MessageSquare, User, Clock } from 'lucide-react'
-import { getThreads, Thread } from '@/services/threads'
-import Link from 'next/link'
+import { Card } from '@/components/ui/card'
+import { getThreads } from '@/services/threads'
 
 export default function ThreadsPage() {
-  const { data: threads, isLoading, error } = useQuery<Thread[]>({
+  const router = useRouter()
+  const { data: threads, isLoading, error } = useQuery({
     queryKey: ['threads'],
     queryFn: getThreads
   })
 
+  if (isLoading) {
+    return (
+      <div className="container mx-auto py-8">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Threads</h1>
+          <Button>
+            <Plus className="mr-2 h-4 w-4" />
+            New Thread
+          </Button>
+        </div>
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <Card key={i} className="p-4 animate-pulse">
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   if (error) {
     return (
-      <div className="container py-12">
-        <Card className="max-w-4xl mx-auto">
-          <CardContent className="pt-6">
-            <div className="text-destructive text-center">
-              Failed to load threads. Please try again later.
-            </div>
-          </CardContent>
+      <div className="container mx-auto py-8">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Threads</h1>
+          <Button>
+            <Plus className="mr-2 h-4 w-4" />
+            New Thread
+          </Button>
+        </div>
+        <Card className="p-4">
+          <p className="text-red-500">Failed to load threads</p>
         </Card>
       </div>
     )
   }
 
   return (
-    <div className="container py-12">
-      <div className="max-w-4xl mx-auto space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Discussion Threads</h1>
-          <Button>Create New Thread</Button>
-        </div>
+    <div className="container mx-auto py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Threads</h1>
+        <Button onClick={() => router.push('/threads/create')}>
+          <Plus className="mr-2 h-4 w-4" />
+          New Thread
+        </Button>
+      </div>
 
-        <div className="space-y-4">
-          {isLoading ? (
-            // Loading skeletons
-            Array.from({ length: 5 }).map((_, i) => (
-              <Card key={i}>
-                <CardContent className="p-6">
-                  <Skeleton className="h-6 w-3/4 mb-2" />
-                  <Skeleton className="h-4 w-1/4" />
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            // Thread list
-            threads?.map((thread) => (
-              <Link href={`/threads/${thread.thread_id}`} key={thread.thread_id}>
-                <Card className="hover:bg-muted/50 transition-colors">
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
-                      <div className="space-y-1">
-                        <h2 className="text-xl font-semibold">{thread.title}</h2>
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <User className="h-4 w-4" />
-                            <span>{thread.author_name}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" />
-                            <span>{new Date(thread.updated_at).toLocaleDateString()}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <MessageSquare className="h-4 w-4" />
-                            <span>{thread.comment_count} comments</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))
-          )}
-        </div>
+      <div className="space-y-4">
+        {threads?.map((thread) => (
+          <Card
+            key={thread.id}
+            className="p-4 hover:bg-gray-50 cursor-pointer"
+            onClick={() => router.push(`/threads/${thread.id}`)}
+          >
+            <h2 className="text-xl font-semibold mb-2">{thread.title}</h2>
+            <div className="flex items-center text-sm text-gray-500">
+              <span>Posted by {thread.authorName}</span>
+              <span className="mx-2">•</span>
+              <span>{new Date(thread.createdAt).toLocaleDateString()}</span>
+              <span className="mx-2">•</span>
+              <span>{thread.commentCount} comments</span>
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
   )

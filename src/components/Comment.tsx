@@ -37,7 +37,7 @@ export function Comment({ comment, onReply }: CommentProps) {
 
   const handleReply = () => {
     if (replyContent.trim()) {
-      onReply(comment.comment_id, replyContent)
+      onReply(comment.id, replyContent)
       setReplyContent('')
       setIsReplying(false)
     }
@@ -49,14 +49,14 @@ export function Comment({ comment, onReply }: CommentProps) {
         <div className="flex items-start gap-4">
           <Avatar className="h-8 w-8">
             <AvatarFallback>
-              {comment.author_name.split(' ').map(n => n[0]).join('')}
+              {comment.authorName.split(' ').map(n => n[0]).join('')}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <span className="font-medium">{comment.author_name}</span>
-              <span className="text-xs text-gray-600">
-                {formatTimestamp(comment.created_at)}
+              <span className="font-medium">{comment.authorName}</span>
+              <span className="text-sm text-gray-600">
+                {formatTimestamp(comment.createdAt)}
               </span>
             </div>
             <p className="text-sm mb-2">{comment.content}</p>
@@ -106,7 +106,7 @@ export function Comment({ comment, onReply }: CommentProps) {
               <div className="mt-4 pl-4 border-l-2">
                 {comment.children.map((child) => (
                   <Comment 
-                    key={child.comment_id} 
+                    key={child.id} 
                     comment={child} 
                     onReply={onReply}
                   />
