@@ -8,9 +8,21 @@ import { MessageSquare, ThumbsUp, User, Clock, ArrowLeft } from 'lucide-react'
 import { getThreadDetail, ThreadDetail } from '@/services/threads'
 import { Comment } from '@/components/Comment'
 import { Textarea } from '@/components/ui/textarea'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { useRouter } from 'next/navigation'
+import { AIAssistant } from '@/components/AIAssistant'
+
+function formatTimestamp(timestamp: string) {
+  const date = new Date(timestamp)
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+}
 
 export default function ThreadPage({ params }: { params: { threadId: string } }) {
   const router = useRouter()
@@ -20,6 +32,13 @@ export default function ThreadPage({ params }: { params: { threadId: string } })
     queryKey: ['thread', params.threadId],
     queryFn: () => getThreadDetail(params.threadId)
   })
+
+  useEffect(() => {
+    console.log('Thread data:', thread)
+    if (thread?.comments) {
+      console.log('Comments:', thread.comments)
+    }
+  }, [thread])
 
   const handleReply = (parentId: string, content: string) => {
     // TODO: Implement reply functionality
@@ -49,18 +68,17 @@ export default function ThreadPage({ params }: { params: { threadId: string } })
   }
 
   return (
-    <div className="container py-12">
-      <div className="max-w-4xl mx-auto space-y-6">
-        {/* Back button */}
-        <Button
-          variant="ghost"
-          className="gap-2"
-          onClick={() => router.back()}
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Threads
-        </Button>
+    <div className="container mx-auto py-8">
+      <Button
+        variant="ghost"
+        className="mb-4"
+        onClick={() => router.back()}
+      >
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        Back to Threads
+      </Button>
 
+      <div className="max-w-4xl mx-auto space-y-6">
         {isLoading ? (
           // Loading skeleton
           <Card>
@@ -84,8 +102,8 @@ export default function ThreadPage({ params }: { params: { threadId: string } })
                   </Avatar>
                   <div className="flex items-center gap-2">
                     <span className="font-medium">{thread?.author_name}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {new Date(thread?.created_at || '').toLocaleDateString()}
+                    <span className="text-sm text-gray-600">
+                      {formatTimestamp(thread?.created_at || '')}
                     </span>
                   </div>
                 </div>
@@ -138,6 +156,8 @@ export default function ThreadPage({ params }: { params: { threadId: string } })
           </>
         )}
       </div>
+
+      <AIAssistant thread={thread} />
     </div>
   )
 } 
