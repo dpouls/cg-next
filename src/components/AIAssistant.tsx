@@ -34,13 +34,13 @@ export function AIAssistant({ className, thread }: AIAssistantProps) {
   // Format thread data with timestamps
   const formattedThread = thread ? {
     ...thread,
-    created_at: formatTimestamp(thread.created_at),
+    createdAt: formatTimestamp(thread.createdAt),
     comments: thread.comments.map(comment => ({
       ...comment,
-      created_at: formatTimestamp(comment.created_at),
+      createdAt: formatTimestamp(comment.createdAt),
       children: comment.children?.map((child: Comment) => ({
         ...child,
-        created_at: formatTimestamp(child.created_at)
+        createdAt: formatTimestamp(child.createdAt)
       }))
     }))
   } : null

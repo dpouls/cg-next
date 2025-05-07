@@ -100,7 +100,15 @@ export const getThreads = async (): Promise<Thread[]> => {
 // Function to get a specific thread with comments
 export const getThreadDetail = async (threadId: string): Promise<ThreadDetail> => {
   // TODO: Replace with actual API call
-  return mockThreadDetail;
+  const thread = mockThreads.find(t => t.id === threadId)
+  if (!thread) {
+    throw new Error('Thread not found')
+  }
+  
+  return {
+    ...thread,
+    comments: mockComments
+  }
 };
 
 // Function to create a new thread
