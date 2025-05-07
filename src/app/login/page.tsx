@@ -8,10 +8,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { login } from '@/services/auth'
 import { useToast } from '@/components/ui/use-toast'
+import { useAuthStore } from '@/store/useAuthStore'
 
 export default function LoginPage() {
   const router = useRouter()
   const { toast } = useToast()
+  const { setUser, setToken } = useAuthStore()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
@@ -25,12 +27,19 @@ export default function LoginPage() {
     try {
       const response = await login(formData)
       
+      // Store user data and token
+      setUser({
+        id: response.user.uuid,
+        name: `${response.user.first_name} ${response.user.last_name}`,
+        email: response.user.email
+      })
+      setToken(response.access)
+      
       toast({
         title: "Login successful",
         description: "Welcome back!",
       })
 
-      // Redirect to profile page
       router.push('/profile')
     } catch (error) {
       toast({

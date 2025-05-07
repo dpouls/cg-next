@@ -7,16 +7,31 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
+import { useAuthStore } from '@/store/useAuthStore'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function SignUpPage() {
   const router = useRouter()
+  const { toast } = useToast()
+  const { setUser, setToken } = useAuthStore()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [passwordError, setPasswordError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
     setError('')
+    setPasswordError('')
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      setPasswordError('Passwords do not match')
+      setIsLoading(false)
+      return
+    }
 
     const formData = new FormData(e.currentTarget)
     const data = {
@@ -28,10 +43,6 @@ export default function SignUpPage() {
       date_of_birth: formData.get('date_of_birth'),
       address_zip: formData.get('address_zip'),
       auth_provider: 'email',
-      address_street: formData.get('address_street'),
-      address_city: formData.get('address_city'),
-      address_state: formData.get('address_state'),
-      address_country: 'United States',
       profile_data: {},
       phone_number: formData.get('phone_number'),
     }
@@ -47,8 +58,20 @@ export default function SignUpPage() {
 
       if (response.status === 201) {
         const userData = await response.json()
-        // Store user data or token as needed
-        router.push('/login') // Redirect to login after successful signup
+        // Store user data and token
+        setUser({
+          id: userData.id,
+          name: `${userData.first_name} ${userData.last_name}`,
+          email: userData.email
+        })
+        setToken(userData.token)
+        
+        toast({
+          title: "Account created",
+          description: "Welcome to Common Ground!",
+        })
+
+        router.push('/profile')
       } else {
         const errorData = await response.json()
         setError(errorData.message || 'Sign up failed. Please try again.')
@@ -113,16 +136,37 @@ export default function SignUpPage() {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="bg-background/80 border-primary/30"
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="bg-background/80 border-primary/30"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="confirm_password">Confirm Password</Label>
+                <Input
+                  id="confirm_password"
+                  name="confirm_password"
+                  type="password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className={`bg-background/80 border-primary/30 ${
+                    passwordError ? 'border-destructive' : ''
+                  }`}
+                />
+              </div>
             </div>
+            {passwordError && (
+              <p className="text-sm text-destructive">{passwordError}</p>
+            )}
 
             <div className="space-y-2">
               <Label htmlFor="date_of_birth">Date of Birth</Label>
@@ -147,43 +191,14 @@ export default function SignUpPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="address_street">Street Address</Label>
+              <Label htmlFor="address_zip">ZIP Code</Label>
               <Input
-                id="address_street"
-                name="address_street"
+                id="address_zip"
+                name="address_zip"
                 required
+                placeholder="Enter your ZIP code"
                 className="bg-background/80 border-primary/30"
               />
-            </div>
-
-            <div className="grid grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="address_city">City</Label>
-                <Input
-                  id="address_city"
-                  name="address_city"
-                  required
-                  className="bg-background/80 border-primary/30"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="address_state">State</Label>
-                <Input
-                  id="address_state"
-                  name="address_state"
-                  required
-                  className="bg-background/80 border-primary/30"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="address_zip">ZIP Code</Label>
-                <Input
-                  id="address_zip"
-                  name="address_zip"
-                  required
-                  className="bg-background/80 border-primary/30"
-                />
-              </div>
             </div>
 
             {error && (

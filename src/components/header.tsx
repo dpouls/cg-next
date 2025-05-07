@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useAuthStore } from "@/store/useAuthStore"
+import { User } from "lucide-react"
 
 export function Header() {
   const pathname = usePathname()
@@ -36,13 +37,14 @@ export function Header() {
             <>
               <Link
                 href="/profile"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
+                className={`flex items-center space-x-2 text-sm font-medium transition-colors hover:text-primary ${
                   pathname === "/profile"
                     ? "text-primary"
                     : "text-gray-900"
                 }`}
               >
-                Profile
+                <User className="h-5 w-5" />
+                <span>Profile</span>
               </Link>
               <Button variant="ghost" onClick={logout}>
                 Logout
